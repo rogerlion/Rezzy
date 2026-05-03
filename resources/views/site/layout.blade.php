@@ -3,26 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {{-- 搜索引擎站点验证（按 config/seo.php 自动渲染） --}}
-    @php($siteVerifications = config('"'"'seo.verifications'"'"', []))
-    @if(!empty($siteVerifications['"'"'bing'"'"']))
-        <meta name="msvalidate.01" content="{{ $siteVerifications['"'"'bing'"'"'] }}">
-    @endif
-    @if(!empty($siteVerifications['"'"'baidu'"'"']))
-        <meta name="baidu-site-verification" content="{{ $siteVerifications['"'"'baidu'"'"'] }}">
-    @endif
-    @if(!empty($siteVerifications['"'"'google'"'"']))
-        <meta name="google-site-verification" content="{{ $siteVerifications['"'"'google'"'"'] }}">
-    @endif
-    @if(!empty($siteVerifications['"'"'360'"'"']))
-        <meta name="360-site-verification" content="{{ $siteVerifications['"'"'360'"'"'] }}">
-    @endif
-    @if(!empty($siteVerifications['"'"'sogou'"'"']))
-        <meta name="sogou_site_verification" content="{{ $siteVerifications['"'"'sogou'"'"'] }}">
-    @endif
-    @if(!empty($siteVerifications['"'"'shenma'"'"']))
-        <meta name="shenma-site-verification" content="{{ $siteVerifications['"'"'shenma'"'"'] }}">
-    @endif
+    <meta name="msvalidate.01" content="761AE0B23EAEA78C06BC3DE0B0C0F27E" />
     <title>{{ $pageTitle ?? $siteName }}</title>
     <meta name="description" content="{{ $pageDescription ?? '' }}">
     @isset($siteKeywords)
