@@ -41,3 +41,12 @@ Schedule::command('geoflow:push-seo-urls --new')
     ->dailyAt('03:00')
     ->withoutOverlapping(10)
     ->onOneServer();
+
+/**
+ * AI 监控 plan → title 库自动转换：每天 09:30（错峰 09:00 监控 + 03:00 push）
+ * 闭环 v3 §17.2 关键一环：监控发现的内容缺口自动转入待写标题，让 task 消费产出文章。
+ */
+Schedule::command("geoflow:plans-to-titles --limit=5")
+    ->dailyAt("09:30")
+    ->withoutOverlapping(10)
+    ->onOneServer();
