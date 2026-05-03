@@ -15,6 +15,9 @@
 
             <nav class="tt-topnav" aria-label="Primary">
                 <a href="{{ route('site.home') }}" class="{{ $isHome ? 'is-active' : '' }}">{{ __('front.nav.home') }}</a>
+                @foreach($navPages as $pageItem)
+                    <a href="{{ route('site.page.'.$pageItem['slug']) }}" class="{{ request()->is($pageItem['slug']) ? 'is-active' : '' }}">{{ $pageItem['label'] }}</a>
+                @endforeach
                 @foreach($navCategories->take(5) as $categoryItem)
                     <a href="{{ route('site.category', $categoryItem->slug) }}">{{ $categoryItem->name }}</a>
                 @endforeach
@@ -27,6 +30,9 @@
         <div id="ttMobileNav" class="hidden pb-4">
             <div class="tt-channel-rail !sticky !top-auto">
                 <a href="{{ route('site.home') }}" class="tt-channel {{ $isHome ? 'is-active' : '' }}">{{ __('front.nav.home') }}</a>
+                @foreach($navPages as $pageItem)
+                    <a href="{{ route('site.page.'.$pageItem['slug']) }}" class="tt-channel {{ request()->is($pageItem['slug']) ? 'is-active' : '' }}">{{ $pageItem['label'] }}</a>
+                @endforeach
                 @foreach($navCategories as $categoryItem)
                     <a href="{{ route('site.category', $categoryItem->slug) }}" class="tt-channel">{{ $categoryItem->name }}</a>
                 @endforeach

@@ -30,6 +30,7 @@ use App\Http\Controllers\Admin\UrlImportController;
 use App\Http\Controllers\Site\ArchiveController;
 use App\Http\Controllers\Site\ArticleController as SiteArticleController;
 use App\Http\Controllers\Site\CategoryController as SiteCategoryController;
+use App\Http\Controllers\Site\PageController as SitePageController;
 use App\Http\Controllers\Site\HomeController;
 use App\Http\Controllers\Site\SitemapController;
 use Illuminate\Support\Facades\Auth;
@@ -44,6 +45,13 @@ Route::middleware(['site.locale'])->group(function (): void {
         ->where(['year' => '[0-9]{4}', 'month' => '[0-9]{2}']);
     Route::get('/category/{slug}', [SiteCategoryController::class, 'show'])->name('site.category');
     Route::get('/article/{slug}', [SiteArticleController::class, 'show'])->name('site.article');
+
+    // 5 大实体页（机构 / 服务 / 团队 / 联系 / FAQ） — 内容由 storage/app/public/seo/pages/{slug}.md 提供，bind-mount 热更新
+    Route::get('/about',    [SitePageController::class, 'show'])->defaults('slug', 'about')->name('site.page.about');
+    Route::get('/services', [SitePageController::class, 'show'])->defaults('slug', 'services')->name('site.page.services');
+    Route::get('/team',     [SitePageController::class, 'show'])->defaults('slug', 'team')->name('site.page.team');
+    Route::get('/contact',  [SitePageController::class, 'show'])->defaults('slug', 'contact')->name('site.page.contact');
+    Route::get('/faq',      [SitePageController::class, 'show'])->defaults('slug', 'faq')->name('site.page.faq');
 });
 
 $adminPrefix = trim((string) config('geoflow.admin_base_path', '/geo_admin'), '/');

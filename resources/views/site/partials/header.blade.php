@@ -21,6 +21,10 @@
                     {{ __('front.nav.home') }}
                 </a>
 
+                @foreach($navPages as $pageItem)
+                    <a href="{{ route('site.page.'.$pageItem['slug']) }}" class="flex items-center text-sm font-medium {{ request()->is($pageItem['slug']) ? 'text-gray-900' : 'text-gray-600 hover:text-gray-900' }}">{{ $pageItem['label'] }}</a>
+                @endforeach
+
                 <div class="relative" id="categoryDropdown">
                     <button type="button" class="flex items-center text-gray-600 hover:text-gray-900 font-medium text-sm" onclick="toggleCategoryDropdown()">
                         <i data-lucide="folder" class="w-4 h-4 mr-1"></i>
@@ -56,6 +60,9 @@
                     <i data-lucide="home" class="w-4 h-4 mr-3"></i>
                     {{ __('front.nav.home') }}
                 </a>
+                @foreach($navPages as $pageItem)
+                    <a href="{{ route('site.page.'.$pageItem['slug']) }}" class="mobile-nav-link flex items-center text-sm font-medium text-gray-600 hover:text-gray-900">{{ $pageItem['label'] }}</a>
+                @endforeach
                 <button type="button" class="mobile-nav-link flex items-center justify-between text-gray-600 hover:text-gray-900 font-medium py-2 text-sm w-full" onclick="toggleMobileCategoryMenu()">
                     <span class="flex items-center">
                         <i data-lucide="folder" class="w-4 h-4 mr-3"></i>

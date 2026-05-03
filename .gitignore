@@ -31,3 +31,6 @@ Thumbs.db
 # Generated AI-discovery files (regenerated hourly by geoflow:generate-llms)
 /storage/app/public/seo/llms.txt
 /storage/app/public/seo/llms-full.txt
+
+# 5 大实体页内容（运行时可热改，不进版本库）
+/storage/app/public/seo/pages/*.md
