@@ -1,2 +1,4 @@
 User-agent: *
 Disallow:
+
+Sitemap: https://geo.rezzy.cn/sitemap.xml
