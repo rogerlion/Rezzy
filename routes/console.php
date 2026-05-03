@@ -21,3 +21,11 @@ Schedule::command('horizon:snapshot')->everyFiveMinutes();
  * GeoFlow 任务调度：每分钟扫描一次可执行任务并入队（对齐 bak cron 逻辑）。
  */
 Schedule::command('geoflow:schedule-tasks')->everyMinute();
+
+/**
+ * llms.txt / llms-full.txt 生成器：每小时重写，便于 AI 抓取最新内容。
+ */
+Schedule::command('geoflow:generate-llms')
+    ->hourly()
+    ->withoutOverlapping(10)
+    ->onOneServer();
