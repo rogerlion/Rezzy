@@ -9,6 +9,7 @@ return array_replace_recursive($base, [
         'articles' => '記事',
         'materials' => '素材',
         'ai_config' => 'AI設定',
+        'ai_monitoring' => 'AIモニタリング',
         'site_settings' => 'サイト設定',
         'security' => 'センシティブワード',
         'admin_users' => 'ユーザー管理',

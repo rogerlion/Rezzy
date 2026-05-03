@@ -22,6 +22,7 @@
         'articles' => ['route' => 'admin.articles.index', 'name' => __('admin.nav.articles')],
         'materials' => ['route' => 'admin.materials.index', 'name' => __('admin.nav.materials')],
         'ai_config' => ['route' => 'admin.ai.configurator', 'name' => __('admin.nav.ai_config')],
+        'ai_monitoring' => ['route' => 'admin.ai-monitoring.index', 'name' => __('admin.nav.ai_monitoring')],
         'site_settings' => ['route' => 'admin.site-settings.index', 'name' => __('admin.nav.site_settings')],
     ];
     if ($isSuperAdmin) {
@@ -72,6 +73,9 @@
         'admin.url-import' => 'materials',
         'admin.ai-models.index' => 'ai_config',
         'admin.ai-prompts' => 'ai_config',
+        'admin.ai-monitoring.index' => 'ai_monitoring',
+        'admin.ai-monitoring.checks.store' => 'ai_monitoring',
+        'admin.ai-monitoring.plans.status' => 'ai_monitoring',
         'admin.site-settings.sensitive-words' => 'site_settings',
         'admin.site-settings.sensitive-words.store' => 'site_settings',
         'admin.site-settings.sensitive-words.delete' => 'site_settings',

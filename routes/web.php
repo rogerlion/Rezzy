@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AdminActivityLogController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminWelcomeController;
+use App\Http\Controllers\Admin\AiMonitoringController;
 use App\Http\Controllers\Admin\AiModelController;
 use App\Http\Controllers\Admin\AiPromptController;
 use App\Http\Controllers\Admin\AiSpecialPromptController;
@@ -205,6 +206,24 @@ Route::prefix($adminPrefix)->name('admin.')->middleware(['admin.locale'])->group
             Route::get('ai-special-prompts', [AiSpecialPromptController::class, 'index'])->name('ai-special-prompts');
             Route::post('ai-special-prompts/keyword', [AiSpecialPromptController::class, 'updateKeyword'])->name('ai-special-prompts.keyword');
             Route::post('ai-special-prompts/description', [AiSpecialPromptController::class, 'updateDescription'])->name('ai-special-prompts.description');
+        });
+
+        // AI 搜索监控：把平台监测结果沉淀为文章方向与媒体投放计划
+        Route::prefix('ai-monitoring')->name('ai-monitoring.')->group(function () {
+            Route::get('/', [AiMonitoringController::class, 'index'])->name('index');
+            Route::post('checks', [AiMonitoringController::class, 'storeCheck'])->name('checks.store');
+            Route::post('checks/{checkId}/status', [AiMonitoringController::class, 'updateCheckStatus'])
+                ->name('checks.status')
+                ->whereNumber('checkId');
+            Route::post('plans/{planId}/status', [AiMonitoringController::class, 'updatePlanStatus'])
+                ->name('plans.status')
+                ->whereNumber('planId');
+            Route::post('plans/{planId}/article', [AiMonitoringController::class, 'createArticleFromPlan'])
+                ->name('plans.article')
+                ->whereNumber('planId');
+            Route::post('plans/{planId}/task', [AiMonitoringController::class, 'attachTaskToPlan'])
+                ->name('plans.task')
+                ->whereNumber('planId');
         });
 
         Route::prefix('site-settings')->name('site-settings.')->group(function () {
