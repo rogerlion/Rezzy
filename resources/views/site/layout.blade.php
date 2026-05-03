@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="msvalidate.01" content="761AE0B23EAEA78C06BC3DE0B0C0F27E" />
     <title>{{ $pageTitle ?? $siteName }}</title>
     <meta name="description" content="{{ $pageDescription ?? '' }}">
     @isset($siteKeywords)
