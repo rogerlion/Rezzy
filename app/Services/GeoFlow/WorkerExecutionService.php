@@ -71,10 +71,10 @@ class WorkerExecutionService
 
         $titleRow = $this->pickTitle($task);
         $author = $this->pickAuthor($task);
-        $category = $this->pickCategory($task);
+        $keyword = (string) ($titleRow->keyword ?? '');
+        $category = $this->pickCategory($task, (string) $titleRow->title, $keyword);
         $prompt = $task->prompt_id ? Prompt::query()->find((int) $task->prompt_id) : null;
 
-        $keyword = (string) ($titleRow->keyword ?? '');
         $knowledgeContext = $this->resolveKnowledgeContext($task, (string) $titleRow->title, $keyword);
         $contentPrompt = $this->buildContentPrompt((string) $titleRow->title, $keyword, $prompt?->content, $knowledgeContext);
         $generation = $this->generateContentWithModelSelection($task, $contentPrompt);
@@ -446,13 +446,67 @@ class WorkerExecutionService
         return Author::query()->orderBy('id')->first();
     }
 
-    private function pickCategory(Task $task): ?Category
+    private function pickCategory(Task $task, string $title = '', string $keyword = ''): ?Category
     {
         if (($task->category_mode ?? 'smart') === 'fixed' && (int) ($task->fixed_category_id ?? 0) > 0) {
             return Category::query()->find((int) $task->fixed_category_id);
         }
 
-        return Category::query()->orderBy('sort_order')->orderBy('id')->first();
+        $categories = Category::query()
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->get(['id', 'name', 'slug']);
+
+        if ($categories->isEmpty()) {
+            return null;
+        }
+
+        if (($task->category_mode ?? 'smart') === 'random') {
+            return $categories->random();
+        }
+
+        $preferredSlug = $this->guessCategorySlug($title, $keyword);
+        if ($preferredSlug !== null) {
+            $matchedCategory = $this->findCategoryBySlug($categories, $preferredSlug);
+            if ($matchedCategory !== null) {
+                return $matchedCategory;
+            }
+        }
+
+        return $this->findCategoryBySlug($categories, 'service-guide') ?? $categories->first();
+    }
+
+    private function guessCategorySlug(string $title, string $keyword): ?string
+    {
+        $text = mb_strtolower(trim($title.' '.$keyword), 'UTF-8');
+        if ($text === '') {
+            return null;
+        }
+
+        $rules = [
+            'cases' => ['案例', '客户', '反馈', '复盘', '前后对比', '效果记录', '真实经历'],
+            'about' => ['瑞思', 'rezzy', '机构介绍', '品牌', '门店', '地址', '电话', '联系方式', '团队', '资质', '环境', '创始人', '营业时间', '观山湖', '富力中心'],
+            'choose-guide' => ['怎么选', '如何选', '选择', '对比', '哪家', '排名', '机构选择'],
+            'faq' => ['常见问题', '问答', 'faq', '是什么', '为什么', '多久', '几次', '可以吗', '有用吗', '需要吗', '能不能'],
+            'service-guide' => ['盆底', '漏尿', '腹直肌', '产后康复', '产康', '孕期按摩', '母乳', '催乳', '修复', '评估', '核心', '腹压', '骨盆', '私密', '乳腺', '疼痛', '产后', '孕期'],
+        ];
+
+        foreach ($rules as $slug => $needles) {
+            foreach ($needles as $needle) {
+                if (str_contains($text, mb_strtolower($needle, 'UTF-8'))) {
+                    return $slug;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private function findCategoryBySlug($categories, string $slug): ?Category
+    {
+        return $categories->first(
+            fn (Category $category): bool => (string) $category->slug === $slug
+        );
     }
 
     /**

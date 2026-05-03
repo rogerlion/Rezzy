@@ -7,8 +7,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@isset($pageTitle){{ $pageTitle }} — @endisset{{ $adminBrandName }}</title>
-    <script src="{{ asset('js/tailwindcss.play-cdn.js') }}"></script>
-    <script src="{{ asset('js/lucide.min.js') }}"></script>
+    <script src="{{ asset('js/tailwindcss.play-cdn.js') }}" defer></script>
+    <script src="{{ asset('js/lucide.min.js') }}" defer></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
     @stack('styles')
 </head>
 <body class="bg-gray-50">

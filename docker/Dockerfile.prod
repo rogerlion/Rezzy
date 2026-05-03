@@ -2,16 +2,15 @@ FROM composer:2 AS vendor
 
 WORKDIR /app
 
-# composer:2 基础镜像未默认启用 pcntl；Horizon 在 install 时会校验 ext-pcntl（运行阶段已安装，此处对齐锁文件平台检查）
-RUN docker-php-ext-install pcntl
-
+# Skip vendor-stage pcntl compilation on low-memory servers; runtime image installs pcntl.
 COPY composer.json composer.lock ./
 RUN composer install \
     --no-dev \
     --no-interaction \
     --prefer-dist \
     --classmap-authoritative \
-    --no-scripts
+    --no-scripts \
+    --ignore-platform-req=ext-pcntl
 
 COPY . .
 

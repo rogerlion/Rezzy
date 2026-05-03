@@ -137,7 +137,7 @@ class AdminArticlesPageTest extends TestCase
             ->assertSee(__('admin.articles.badge.featured'));
     }
 
-    public function test_admin_brand_stays_geoflow_when_public_site_name_changes(): void
+    public function test_admin_brand_stays_rezzy_geo_when_public_site_name_changes(): void
     {
         $admin = Admin::query()->create([
             'username' => 'admin_brand_admin',
@@ -156,7 +156,7 @@ class AdminArticlesPageTest extends TestCase
         $this->actingAs($admin, 'admin')
             ->get(route('admin.dashboard'))
             ->assertOk()
-            ->assertSee('GEOFlow')
+            ->assertSee('REZZY GEO')
             ->assertDontSee('Public Frontend Name');
     }
 }
