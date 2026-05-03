@@ -1,4 +1,157 @@
-User-agent: *
-Disallow:
+# robots.txt for geo.rezzy.cn
+# Updated: 2026-05-03
+# Strategy: 5-class crawler policy optimized for Chinese AI ecosystem visibility
+# (豆包 / 文心 / 通义 / DeepSeek / Kimi / 腾讯元宝 / 360智脑)
+# Reference: GEO best practices + Tw93's 5-class crawler classification
+# Note: Unlike Tw93's Western-AI-focused config, we ALLOW Bytespider and CN
+# spiders because they are the upstream source for 豆包/文心/元宝/360.
 
+# ============================================================
+# Default - allow everything except admin & internal API paths
+# ============================================================
+User-agent: *
+Allow: /
+Disallow: /geo_admin/
+Disallow: /api/
+Disallow: /storage/private/
+
+# ============================================================
+# CN search engines (upstream of 豆包/文心/元宝/360智脑/神马)
+# ============================================================
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Baiduspider-render
+Allow: /
+
+User-agent: Baiduspider-image
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: Sogou web spider
+Allow: /
+
+User-agent: Sogou inst spider
+Allow: /
+
+User-agent: 360Spider
+Allow: /
+
+User-agent: HaoSouSpider
+Allow: /
+
+User-agent: YisouSpider
+Allow: /
+
+# ============================================================
+# Global search engines (Bing powers ChatGPT search & Copilot;
+# Google grounds Gemini AI Overview)
+# ============================================================
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Yandex
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# ============================================================
+# AI search & retrieval bots (real-time fetch when AI answers a query)
+# ============================================================
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# ============================================================
+# AI user-triggered fetchers (when users paste rezzy URLs into AI chats)
+# ============================================================
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Agent
+Allow: /
+
+# ============================================================
+# AI training crawlers (allow - build long-term brand memory in foundation models)
+# ============================================================
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+# ============================================================
+# SEO scraper tools (block - bandwidth-only, no traffic returned)
+# ============================================================
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: SerpstatBot
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+# ============================================================
+# Site-rip / mirror tools (block - whole-site download attacks)
+# ============================================================
+User-agent: HTTrack
+Disallow: /
+
+User-agent: WebCopier
+Disallow: /
+
+User-agent: wget
+Disallow: /
+
+User-agent: SiteSnagger
+Disallow: /
+
+# ============================================================
+# Sitemaps
+# ============================================================
 Sitemap: https://geo.rezzy.cn/sitemap.xml
