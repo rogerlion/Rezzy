@@ -19,7 +19,7 @@ fi
 
 cd "${MONITOR_DIR}"
 python3 tavily_deepseek_monitor.py --prompts prompts.csv --out "${SEARCH_OUT}" --max-results 8 --sleep 1
-python3 multi_ai_monitor.py --prompts prompts.csv --out "${SCORECARD_OUT}" --providers deepseek --sleep 1
+python3 multi_ai_monitor.py --prompts prompts.csv --out "${SCORECARD_OUT}" --providers deepseek,doubao,qwen --sleep 1
 
 docker cp "${SEARCH_OUT}" geoflow-app-prod:/tmp/"$(basename "${SEARCH_OUT}")"
 docker cp "${SCORECARD_OUT}" geoflow-app-prod:/tmp/"$(basename "${SCORECARD_OUT}")"
