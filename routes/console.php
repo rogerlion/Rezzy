@@ -29,3 +29,15 @@ Schedule::command('geoflow:generate-llms')
     ->hourly()
     ->withoutOverlapping(10)
     ->onOneServer();
+
+/**
+ * 搜索引擎 SEO 主动推送：每天 03:00 把过去 24h 新发布或更新的 URL
+ * 推送给百度搜索资源平台 + IndexNow（Bing/Yandex/Naver）。
+ *
+ * 取代了之前文章发布瞬间的 instant push（已在 AppServiceProvider 注释）—
+ * 节省 Baidu 普通收录配额（合并多 URL 为单次 API 调用）。
+ */
+Schedule::command('geoflow:push-seo-urls --new')
+    ->dailyAt('03:00')
+    ->withoutOverlapping(10)
+    ->onOneServer();

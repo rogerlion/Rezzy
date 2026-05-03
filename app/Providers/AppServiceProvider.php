@@ -37,7 +37,7 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer(['site.layout', 'theme.*.layout'], SiteLayoutComposer::class);
 
-        Article::observe(ArticleSeoPushObserver::class);
+        // Article::observe(ArticleSeoPushObserver::class); // 已改为每天 03:00 cron 批量推送，见 routes/console.php
 
         View::composer('admin.layouts.app', function ($view): void {
             $admin = auth('admin')->user();
