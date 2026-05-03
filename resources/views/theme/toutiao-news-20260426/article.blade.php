@@ -129,12 +129,30 @@
     </div>
 
     @if($stickyAd)
+        @php
+            $stickyAdBadge = (string) ($stickyAd['badge'] ?? '');
+            $stickyAdTitle = (string) ($stickyAd['title'] ?? '');
+            $stickyAdCopy = (string) ($stickyAd['copy'] ?? '');
+            $stickyAdButtonText = (string) ($stickyAd['button_text'] ?? '');
+            $stickyAdButtonUrl = (string) ($stickyAd['button_url'] ?? '#');
+        @endphp
         <div id="stickyAd" class="fixed bottom-4 right-4 z-50 max-w-xs rounded-2xl border border-gray-200 bg-white p-4 shadow-xl">
-            <button type="button" class="absolute right-2 top-2 text-gray-400 hover:text-gray-700" onclick="document.getElementById('stickyAd')?.remove()" aria-label="Close">×</button>
-            @if($stickyAd->title)
-                <div class="mb-2 pr-5 text-sm font-bold text-gray-900">{{ $stickyAd->title }}</div>
+            <button type="button" class="absolute right-2 top-2 text-gray-400 hover:text-gray-700" onclick="document.getElementById('stickyAd')?.remove()" aria-label="{{ __('site.article_ad_close') }}">×</button>
+            @if($stickyAdBadge !== '')
+                <div class="mb-2 pr-5 text-xs font-semibold uppercase tracking-wide text-blue-600">{{ $stickyAdBadge }}</div>
             @endif
-            {!! $stickyAd->content_html !!}
+            @if($stickyAdTitle !== '')
+                <div class="mb-2 pr-5 text-sm font-bold text-gray-900">{{ $stickyAdTitle }}</div>
+            @endif
+            @if($stickyAdCopy !== '')
+                <p class="mb-3 text-sm leading-6 text-gray-600">{{ $stickyAdCopy }}</p>
+            @endif
+            @if($stickyAdButtonText !== '')
+                <a href="{{ $stickyAdButtonUrl }}" class="inline-flex items-center rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">
+                    {{ $stickyAdButtonText }}
+                    <i data-lucide="arrow-up-right" class="ml-2 h-4 w-4"></i>
+                </a>
+            @endif
         </div>
     @endif
 @endsection
