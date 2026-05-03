@@ -27,3 +27,7 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Generated AI-discovery files (regenerated hourly by geoflow:generate-llms)
+/storage/app/public/seo/llms.txt
+/storage/app/public/seo/llms-full.txt
