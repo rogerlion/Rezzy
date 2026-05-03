@@ -63,7 +63,7 @@ final class SearchEnginePushService
             $response = Http::timeout(10)
                 ->withHeaders(['Content-Type' => 'text/plain'])
                 ->withBody(implode("\n", $urls), 'text/plain')
-                ->post($endpoint . '?' . http_build_query(['site' => $site, 'token' => $token]));
+                ->post($endpoint . '?site=' . $site . '&token=' . $token);
 
             $payload = $response->json() ?: [];
 
